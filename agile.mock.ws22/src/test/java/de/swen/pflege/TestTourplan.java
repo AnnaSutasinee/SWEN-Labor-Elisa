@@ -15,6 +15,21 @@ import org.mockito.MockitoAnnotations;
 
 public class TestTourplan {
 
+	@Mock
+	CentralClientFinder ccf;
+
+	@Mock
+	SapService s;
+
+	@InjectMocks
+	Tourplan t;
+
+	@Before
+	public void setup() {
+		t = new Tourplan("Name", ccf, s);
+		MockitoAnnotations.openMocks(this);
+	}
+
 	// TEST TASK 1
 
 	@Test(timeout = 1000)
@@ -58,6 +73,21 @@ public class TestTourplan {
 			name += "A";
 		}
 		new Tourplan(name, new CentralClientFinder(), new SapService());
+	}
+
+	// Task 2
+
+	@Test(timeout = 2000)
+	public void testGetClients() {
+		List<String> clientList = new ArrayList<String>();
+		clientList.add("MockPatient 1");
+		clientList.add("MockPatient 2");
+		clientList.add("MockPatient 3");
+		Mockito.when(s.getSapClientsForName("MockName")).thenReturn(clientList);
+		Mockito.when(ccf.getClients("MockName")).thenReturn(clientList);
+
+		t = new Tourplan("MockName", ccf, s);
+		assertTrue(t.getClients().containsAll(clientList));
 	}
 
 }
