@@ -17,7 +17,7 @@ public class Tourplan {
 	Tourplan(String name, CentralClientFinder f, SapService s) {
 		// Task 1: validate name of Pflege
 		if (name == null)
-			throw new NullPointerException("Name der Pflege darf nicht 'null' sein.");
+			throw new IllegalArgumentException("Name der Pflege darf nicht 'null' sein.");
 		if (name.length() < 3)
 			throw new IllegalArgumentException("Name der Pflege muss min. 3 Zeichen lang sein.");
 		if (name.length() > 31)
@@ -26,6 +26,13 @@ public class Tourplan {
 		this.name = name;
 		centralFinder = f;
 		service = s;
+	}
+
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
 	}
 
 	/**
