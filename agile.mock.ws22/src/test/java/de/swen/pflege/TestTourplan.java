@@ -101,4 +101,32 @@ public class TestTourplan {
 		t = new Tourplan("MockName", ccf, s);
 		assertTrue(t.getClients().isEmpty());
 	}
+
+	// Task 4
+
+	@Test(timeout = 5000)
+	public void testAddWithoutDuplicates() {
+		List<String> clientList = new ArrayList<String>();
+		clientList.add("MockPatient 1");
+		clientList.add("MockPatient 2");
+		clientList.add("MockPatient 3");
+		Mockito.when(s.getSapClientsForName("MockName")).thenReturn(clientList);
+		Mockito.when(ccf.getClients("MockName")).thenReturn(clientList);
+
+		t = new Tourplan("MockName", ccf, s);
+
+		List<String> testList = t.getClients();
+
+		// count, how many times a client is in the testList.
+		// If not exactly once, the test fails.
+		for (String client : testList) {
+			int counter = 0;
+			for (String innerClient : testList) {
+				if (client.equals(innerClient))
+					counter++;
+			}
+			if (counter != 1)
+				fail();
+		}
+	}
 }
