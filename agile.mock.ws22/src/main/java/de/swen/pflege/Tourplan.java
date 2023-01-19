@@ -50,8 +50,12 @@ public class Tourplan {
 	 * @return bereinigte Liste der Klienten (keine Duplikate enthalten)
 	 */
 	private List<String> addWithoutDuplicates(List<String> list, List<String> l) {
-		// ... noch werden keine Duplikate entfernt ...
-
-		return (l);
+		List<String> newList = new ArrayList<String>();
+		newList.addAll(list);
+		for (String string : l) {
+			if (!newList.contains(string))
+				newList.add(string);
+		}
+		return newList;
 	}
 }
