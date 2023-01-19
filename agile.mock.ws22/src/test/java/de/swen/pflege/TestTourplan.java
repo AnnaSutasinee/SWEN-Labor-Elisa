@@ -90,4 +90,15 @@ public class TestTourplan {
 		assertTrue(t.getClients().containsAll(clientList));
 	}
 
+	// Task 3
+
+	@Test(timeout = 1000)
+	public void testGetEmptyClients() {
+		List<String> clientList = new ArrayList<String>();
+		Mockito.when(s.getSapClientsForName("MockName")).thenReturn(clientList);
+		Mockito.when(ccf.getClients("MockName")).thenReturn(clientList);
+
+		t = new Tourplan("MockName", ccf, s);
+		assertTrue(t.getClients().isEmpty());
+	}
 }
