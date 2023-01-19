@@ -15,7 +15,7 @@ public class Tourplan {
 	private String name;
 
 	Tourplan(String name, CentralClientFinder f, SapService s) {
-		//Task 1: validate name of Pflege
+		// Task 1: validate name of Pflege
 		if (name == null)
 			throw new NullPointerException("Name der Pflege darf nicht 'null' sein.");
 		if (name.length() < 3)
@@ -38,7 +38,9 @@ public class Tourplan {
 		list.addAll(centralFinder.getClients(name));
 		list = addWithoutDuplicates(list, service.getSapClientsForName(name));
 
-		return (list);
+		// if list is empty, we also could return the list itself. With this way, we can
+		// easily change the behavior in the future.
+		return (list.isEmpty()) ? new ArrayList<String>() : list;
 	}
 
 	/**
